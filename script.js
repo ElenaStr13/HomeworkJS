@@ -1,20 +1,17 @@
-console.log("You can ignore single and double quotes likes this: \' \' \" \" ");
+let salary = 0,
+    salaryFirst,
+    salarySecond;
 
-alert("Please enter your data");
+salaryFirst = Number(prompt("Enter first month salary"));
+salarySecond = Number(prompt("Enter second month salary"));
+salary = salaryFirst + salarySecond;
+alert(`Your salary for 2 month is: ${salary}`)
 
-let userName,
-    surname,
-    old,
-    adminStatus;
+alert(`You have extra bonus! Your total salary was: ${salary}$ It\'s increase for 1$ and now it is ${++salary}$`);
 
-userName = prompt("Enter your name");
-alert("Your name is: " + userName);
 
-surname = prompt("Enter your surname");
-alert("Your full name is: " + userName + " " + surname);
-
-old = prompt("How old are you?");
-alert("Your name is" + userName + " " + surname + " your age is: " + old);
-
-adminStatus = prompt("Are you admin? Write admin/not admin");
-alert("Your name is" + userName + " " + surname + " your age is: " + old + ". " + adminStatus + " status: true");
+if (salary >= 2000) {
+    alert("I\'m ready to work");
+} else {
+    alert("I\'m out");
+}
