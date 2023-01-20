@@ -1,57 +1,83 @@
-//1. for the old
- let old;
+/*1. напишіть функцію, яка повертає більше з двох чисел, 
+якщо вони рівні то повертає рядок*/
 
- old = Number(prompt("How old are you?"));
-if (old <= 17) {
-     confirm("Do you study at school?");
- } else if (old > 17 && old < 25) {
-     confirm("Do you study at ?");
- } else if (25 <= old && old < 60) {
-     confirm("Do you have a job?");
- } else {
-     confirm("What are you doing?");
- };
+let a = Number(prompt("Enter first number"));
+let b = Number(prompt("Enter second number"));
 
-//2. program for property display and use switch
-// let property;
-
- property = prompt("Enter property display for css please: block or flex, or grid, or inline, or none");
-
- switch (property) {
-     case 'block':
-     case 'flex':
-     case 'grid':
-     case 'inline':
-     case 'none':
-         alert(property);
-         break
-
-     default:
-         alert("Set \'display: inline-block;\' ");
-         breake
- };
-
-//3. Enter the number for use "promt" and out to "alert" gor this number 
-//exclude the string type
-let num;
-
-num = Number(prompt("Please enter the number"));
-
- for (let i = 0; i < 10; i++) {
-     if (num) {
-        alert(`${num} by 12 equals ${12*num}`);
-        break;
-     };
-     num = Number(prompt("Your number is incorent, please enter corect number"));
-    continue;
- };
-
-//4. output the even numbers and use "for"
-
- for (let i = 2; i < 50; i++) {
-     if (i % 2 === 0) {
-         console.log(i)
+function maxNumber(a, b) {
+    if (a > b) {
+        alert(a);
+    } else if (b > a) {
+        alert(b)
+    } else {
+        alert(`${a}=${b}`);
     }
-     continue;
 }
 
+maxNumber(a, b);
+
+/*2. Напишіть функцію reverse(number), яка приймає число та змінює
+ його знак на протилежний*/
+
+let num = Number(prompt("2. Enter the number"));
+
+function reverse(a) {
+    a = -a;
+    alert(a);
+}
+
+reverse(num);
+
+
+/*3. Потрібна функція additionForThree (number, count), яка отримує
+number  та додає до нього число 3 стільки разів, скільки вказано
+у змінній  count*/
+
+let number = 5; //Number(prompt("Enter the number"));
+numberUser = number;
+let count = 4; //Number(prompt("Enter the count"));
+
+function additionForThree(num, c) {
+    for (let i = 1; i <= c; i++) {
+        num = num + 3;
+    }
+    return num
+}
+
+console.log(`result for number:${numberUser} additional number 3 for ${count} times is ${additionForThree (number, count)}`);
+
+/*4. Написати функцію getMetric(metric, km, m, cm), яка приймає значення
+у кілометрах "km" та преводить їх у метри "m" або сантиметри "cm", тоді треба
+перевести в метри чи сантиметри. Створити дві окремі функції для перерахунку
+значень в метри "KmToM(km)" та сантиметри "KmToCm(km)". Передайте
+ці функції у вигляді колбеків у функцію getMetric*/
+
+let metric = prompt("Enter conversion in meters(m) or centimeters(cm)"),
+    km = Number(prompt("Enter the km")),
+    m,
+    cm;
+
+
+let KmToM = function (km) {
+    m = km * 1000;
+    return m;
+};
+
+let KmToCm = function (km) {
+    cm = km * 100000;
+    return cm;
+};
+
+function getMetric(metric, km, KmToM, KmToCm) {
+    if (metric == "m") {
+        KmToM(km);
+        return m;
+    } else if (metric == "cm") {
+        KmToCm(km);
+        return cm;
+    } else {
+        prompt("Enter m or cm")
+    }
+};
+
+alert(getMetric(metric, km, KmToM, KmToCm));
