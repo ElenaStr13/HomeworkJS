@@ -1,83 +1,66 @@
-/*1. напишіть функцію, яка повертає більше з двох чисел, 
-якщо вони рівні то повертає рядок*/
+/*Створити об'єкт car, який буде містити властивості model, year, color
+1.1 замініти значення кольору на інший;
+ 1.2 додати властивість type: "electric" (або вкажіть інше значення)
+ 1.3 створіть метод signal, при запуску якого буде виводитися alert("fa!fa!")*/
 
-let a = Number(prompt("Enter first number"));
-let b = Number(prompt("Enter second number"));
+let car = {
+    model: "renault",
+    year: 2015,
+    color: "orange",
+};
 
-function maxNumber(a, b) {
-    if (a > b) {
-        alert(a);
-    } else if (b > a) {
-        alert(b)
-    } else {
-        alert(`${a}=${b}`);
+car.color = "brown";
+console.log(`Car-color: ${car.color}`)
+
+car.type = "electric";
+console.log(`Car-type: ${car.type}`)
+
+car.signal = function () {
+    console.log("fa!fa!");
+};
+
+car.signal();
+
+/*2.Переписати метод total() об'єкта salaries  таким чином, щоб він мав можливість 
+рахувати зп незалежно від кількості працівників.*/
+
+let salaries = {
+    frontend: 12000,
+    backend: 10000,
+    designer: 8000,
+    dayPay() {
+        console.log('We must pay salary on Tuesday!');
+    },
+    total: function () {
+        let sum = 0;
+        for (let salary of Object.values(salaries)) {
+            if (typeof (salary) == 'number') {
+                sum += salary;
+            } else {
+                continue
+            }
+        }
+        console.log(sum);
+        return sum;
     }
 }
 
-maxNumber(a, b);
-
-/*2. Напишіть функцію reverse(number), яка приймає число та змінює
- його знак на протилежний*/
-
-let num = Number(prompt("2. Enter the number"));
-
-function reverse(a) {
-    a = -a;
-    alert(a);
-}
-
-reverse(num);
+salaries.total();
 
 
-/*3. Потрібна функція additionForThree (number, count), яка отримує
-number  та додає до нього число 3 стільки разів, скільки вказано
-у змінній  count*/
+/*3. Створити функцію конструктор та побудувати за допомогою неї 2 об'єкти*/
 
-let number = 5; //Number(prompt("Enter the number"));
-numberUser = number;
-let count = 4; //Number(prompt("Enter the count"));
-
-function additionForThree(num, c) {
-    for (let i = 1; i <= c; i++) {
-        num = num + 3;
-    }
-    return num
-}
-
-console.log(`result for number:${numberUser} additional number 3 for ${count} times is ${additionForThree (number, count)}`);
-
-/*4. Написати функцію getMetric(metric, km, m, cm), яка приймає значення
-у кілометрах "km" та преводить їх у метри "m" або сантиметри "cm", тоді треба
-перевести в метри чи сантиметри. Створити дві окремі функції для перерахунку
-значень в метри "KmToM(km)" та сантиметри "KmToCm(km)". Передайте
-ці функції у вигляді колбеків у функцію getMetric*/
-
-let metric = prompt("Enter conversion in meters(m) or centimeters(cm)"),
-    km = Number(prompt("Enter the km")),
-    m,
-    cm;
-
-
-let KmToM = function (km) {
-    m = km * 1000;
-    return m;
+function Notebook(brand, system, cost) {
+    this.brand = brand;
+    this.system = system;
+    this.cost = cost;
 };
 
-let KmToCm = function (km) {
-    cm = km * 100000;
-    return cm;
-};
+let dell = new Notebook('Dell', 'windows', '800');
+let apple = new Notebook('Apple', 'MAC OS', '1700');
 
-function getMetric(metric, km, KmToM, KmToCm) {
-    if (metric == "m") {
-        KmToM(km);
-        return m;
-    } else if (metric == "cm") {
-        KmToCm(km);
-        return cm;
-    } else {
-        prompt("Enter m or cm")
-    }
-};
+console.log(dell);
+console.log(apple);
 
-alert(getMetric(metric, km, KmToM, KmToCm));
+/*4.*/
+
