@@ -83,19 +83,18 @@
 
 // Objects
 let newWorker;
+let worker = prompt("Enter name new worker");
 
- function add() {
-    let worker = prompt("Enter name new worker");
-   
-    for (const key in tasks) {
+function add() {
+    for (let key in tasks) {
         if (worker == key) {
             worker = prompt('This worker is busy, please enter another name');
             newWorker = worker;
         } else {
             newWorker = worker;
         };
-     };
-    console.log(newWorker);
+
+    };
     return newWorker;
 };
 
@@ -115,9 +114,27 @@ const tasks = {
 };
 
 add();
+
+// function taske() {
+//     for (let value in tasks) {
+//         let text = prompt("Enter what work need to do");
+//         let status = prompt("Enter status this work new/done");
+//         tasks[newWorker].text = text;
+//         if (status == "done") {
+//             status = "new";
+//             tasks[newWorker].status = status;
+//         } else {
+//             tasks[newWorker].status = status;
+//         };
+//     };
+//     return tasks;
+// };
+// taske();
 console.log(newWorker);
 let task = { ...tasks };
 console.log(task);
-// newWorker.text = prompt("Enter what work need to do");
-// newWorker.status = prompt("Enter status this work new/done");
+// task.newWorker.text = prompt("Enter what work need to do");
+// task.newWorker.status = prompt("Enter status this work new/done");
+// console.log(task);
+
 
