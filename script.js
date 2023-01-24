@@ -84,8 +84,9 @@
 // Objects
 let newWorker;
 
-function add() {
+ function add() {
     let worker = prompt("Enter name new worker");
+   
     for (const key in tasks) {
         if (worker == key) {
             worker = prompt('This worker is busy, please enter another name');
@@ -93,12 +94,11 @@ function add() {
         } else {
             newWorker = worker;
         };
-    };
+     };
     console.log(newWorker);
     return newWorker;
 };
 
-console.log(newWorker);
 const tasks = {
     Anna: {
         status: 'new',
@@ -114,7 +114,8 @@ const tasks = {
     },
 };
 
-add(newWorker, tasks);
+add();
+console.log(newWorker);
 let task = { ...tasks };
 console.log(task);
 // newWorker.text = prompt("Enter what work need to do");
