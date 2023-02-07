@@ -1,62 +1,106 @@
-/*1. В класі  User зробити захищену властивість  name  і публічні
-властивості login  та age. Завдяки класу створити 2 об'єкти user1, user2*/
-/*2. Створити у класі  User  метод  getName(isAdmin), який повертає ім'я
-користувача або його нік, якщо ім'я не вказано, або відмовляє у доступі, 
-якщо аргумент isAdmin == false*/
-/*3. Створити у класі  User  метод  ChangeName, змінює ім'я
-користувача. Змінна повинна бути підтвердженна паролем 123, якщо ні,
-тоді виводиться Permission denied*/
+/*1. Створити пустий об'єкт, додати властивості name, age які
+доступні тільки для читання та властивість id  яке неможна
+ змінювати та видаляти */
 
-class User {
-    #name;
-    constructor(name, login, age) {
-        this.#name = name;
-        this.login = login;
-        this.age = age;
-    }
-    getName(isAdmin) {
-        return isAdmin ? this.#name : "Permission denied"
-    }
-    ChangeName(newName, loginNew) {
-        if (loginNew == '123') {
-            this.login = loginNew;
-            this.#name = newName;
-            console.log(`Name Changed from Mike to ${newName}`);
-            return this.#name
-        } else {
-            console.log("Premission denied");
+let user = {};
+
+Object.defineProperty(user, "name", {
+    value: "Olena",
+    writable: false
+});
+Object.defineProperty(user, "age", {
+    value: 37,
+    writable: false
+});
+Object.defineProperty(user, "id", {
+    value: 123,
+    writable: false,
+    configurable: false
+});
+
+user.name = "Mike";
+console.log(user.name);//Olena
+delete user.id;
+console.log(user.id);//123
+
+// /*2. Є два об'єкти в першому неможливо було дадати, видалити
+// та переписати, а в другому неможливо було видалити та додати 
+// але можливо переписати.*/
+
+let dataBase = {
+    dbName: 'user',
+    dbType: 'MySQL'
+}
+let configurateDB = {
+    token: '123',
+    password: '567',
+    user: 'admin'
+}
+
+Object.freeze(dataBase);
+dataBase.dbName = 'Nike';
+console.log(dataBase.dbName);//user
+delete dataBase.dbName;
+console.log(dataBase);//{ dbName: 'user', dbType: 'MySQL' }
+
+Object.seal(configurateDB);
+configurateDB.token = 'Nike';
+console.log(configurateDB.token);//Nike
+delete configurateDB.token;
+console.log(configurateDB);//{ token: 'Nike', password: '567', user: 'admin' }
+
+/*3. Є об'єкт. Треба додати setter, який приймає масив та привласнює 
+ці властивості в об'єкт, змінює якщо ці властивості є чи добавляє якщо їх немає*/
+
+let salaries = {
+    frontend: 2000,
+    backend: 1500,
+    desidn: 1000,
+}
+
+Object.defineProperty(salaries, 'sum', {
+    get() {
+        let sum = 0;
+        for (salary in this) {
+            sum += this[salary];
         }
-        return this.#name
-    }
+        console.log(sum);
+    },
+    enumerable: false,
+    set(value) {
+        let newSalary = [];
+        for (let i = 0; i < value.length; i++) {
+            let newSalary = value[i].split(': ');
+            this.key = newSalary[0];
+            this.salary = newSalary[1];
+        }
+        return newSalary;
+    },
+    enumerable: false,
+})
+salaries.sum = ['frontend: 2000', 'backend: 1750', 'desidn: 1000', 'manager: 800'];
+salaries.sum;
+//console.log(salaries);
+
+/*4. Є об'єкт. Написати getter userInfo, який буде повертати всі властивості масиву у вигляді
+властивість:значення, властивість:значення*/
+
+userG = {
+    name: 'Mike',
+    surname: 'Davis',
+    age: 25,
 }
+Object.defineProperty(userG, 'userInfoG', {
+    get() {
+        let userArr = [];
+        for (let key in userG) {
+            userArr.push(`${key} : ${userG[key]}`);
+        }
+        console.log(userArr.join(" "));
+    },
+    enumerable: false
+});
 
-let user1 = new User('Mike', 'Mk_18', 18);
-let user2 = new User('', 'NRG', 22);
-
-console.log(user1.login);
-console.log(user1.age);
-console.log(user2.login);
-console.log(user2.age);
-
-console.log(user1.getName(true));//Mike
-console.log(user2.getName(true));//
-console.log(user2.getName(false));//Mike
-console.log(user1.ChangeName("Bill", '123'));
-
-/*4. Зробити клас Admin, розширюючи його класом  User. Має приватну властивість #isAdmin = true
-Зробити в цьому класі  getUserName(user), який буде приймати користувача та виводити його ім'я*/
-
-class Admin extends User {
-    #isAdmin;
-    constructor(name, login, age, isAdmin = true) {
-        super(name, login, age);
-        this.#isAdmin = isAdmin;
-}
-getUserName(userOne) {
-       return userOne.getName(true);
-    }
-}
-
-let user3 = new Admin ('Olena', '123', 37);
-
-console.log(user3.getUserName(user3)); //Olena
+userG.userInfoG;
+userG.login = 'MK_18';
+userG.userInfoG;
