@@ -71,8 +71,8 @@ Object.defineProperty(salaries, 'sum', {
         let newSalary = [];
         for (let i = 0; i < value.length; i++) {
             let newSalary = value[i].split(': ');
-            this.key = newSalary[0];
-            this.salary = newSalary[1];
+            key = newSalary[0];
+            this[key] = Number(newSalary[1]);
         }
         return newSalary;
     },
@@ -80,7 +80,7 @@ Object.defineProperty(salaries, 'sum', {
 })
 salaries.sum = ['frontend: 2000', 'backend: 1750', 'desidn: 1000', 'manager: 800'];
 salaries.sum;
-//console.log(salaries);
+console.log(salaries);
 
 /*4. Є об'єкт. Написати getter userInfo, який буде повертати всі властивості масиву у вигляді
 властивість:значення, властивість:значення*/
@@ -98,7 +98,7 @@ Object.defineProperty(userG, 'userInfoG', {
         }
         console.log(userArr.join(" "));
     },
-    enumerable: false
+    enumerable: false,
 });
 
 userG.userInfoG;
