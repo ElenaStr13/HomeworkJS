@@ -1,89 +1,97 @@
-//1.Створити масив користувачів, вивести 2 елемент, замінити Ніколу на Алекс
-// Видалити два останніх елемента, вивести довжину масиву, вивід всього у консоль
+/*1.Є два об'єкти. Зробити так щоб об'єкт sportCar  успадкував властивості від об'єкту
+car. Об'єкт passengerCar з власною власністю успадкував властивості від об'єкту car,
+Об'єкт toyCar  з власною властивістю успадкував властивості від об'єкту sportCar, а через
+нього і від car*/
 
-const user = ["Mike", "Nikola", "Tom"];
-console.log (user[2]);
+let car = {
+    type: "electric",
+    while: 4,
+};
 
-let n = user.indexOf("Nikola");
-user[n] = "Alex";
-console.log (user);
+let sportCar =  {
+    doors: 2
+};
+Object.setPrototypeOf(sportCar,car);
+//console.log(sportCar);
 
-user.splice(1,2);
-console.log (user);
-console.log(user.length);
+let passengerCar =  {
+    doors:4,
+};
+Object.setPrototypeOf(passengerCar,car);
+//console.log(passengerCar);
 
-//2.Написати функцію, яка приймає два числові масиви сумує їх
-// та виводить результат у консоль а>b, a<b чи a==b
-
- let a = [5, 3, -4, 25, 32, -16, 6];
- let b = [21, -30, 9, 5, 12, -19, 5, 25];
-
-function result(a,b)
-{let sumA = a.reduce(function(sum,elem) {
-    return sum + elem;
-}, 0);
-console.log(sumA);
-let sumB = b.reduce(function(sum,elem) {
-    return sum + elem;
-}, 0);
-console.log(sumB);
-if (sumA > sumB) {
-    console.log("a > b");
-} else if (sumA < sumB) {
-    console.log("a < b");
-} else {
-    console.log("a==b");
+let toyCar = {
+    type: toy,
 }
-};
-result(a,b);
+Object.setPrototypeOf(toyCar,sportCar);
 
-//3.Зробити масив із фрази так, щоб кожне окреме слово було елементом масиву
+//2.Виправити код, щоб заробітна плата рахувалась для кожного працівника окремо
 
-let phrase = 'I am learning JavaScript right now';
+let employees = {
+    wallet: {},
+    pay(month, sum) {
+        this.wallet[month] = sum;
+    }
+}
 
-let words = phrase.split(" ");
-console.log(words);
-
-//4. Дано два масиви. За допомогою методу foreach додайте у масив b всі елементи
-// масиву а, але без повторів. Потрібно отримати масив [5,3,8,2,1]
-
-let a = [5, 3, 8, 5, 3, 2, 1, 2];
-let b = [];
-
-function result(arr){
-    for (let i of arr) {
-    if(!b.includes(i)) {
-        b.push(i);
-    };
-}return b;
-};
-b = result(a);
-console.log(b);
-
-/*5. Написати функцію, яка знайде та виведе у консоль всі номери id 
-об'єктів, в яких age понад 18 та менше, як 21, не включаючи 18 та 21.
-Таким чином: 3, 6*/
-
-let users = [{ id: 1, age: 17 },
-{ id: 2, age: 18 },
-{ id: 3, age: 19 },
-{ id: 4, age: 21 },
-{ id: 5, age: 17 },
-{ id: 6, age: 20 },
-{ id: 7, age: 25 },];
-
-function selectionAge(item) {
-  if (item.age > 18 && item.age < 21) {
-    console.log(item.id);
-    return true;
-  }
-    return false;
-};
-
- users.filter(selectionAge);
-
-
+let frontendDeveloper = {
+    name: 'Mike',
   
+}
+Object.setPrototypeOf(frontendDeveloper, employees);
+
+let backendDeveloper = {
+    name: 'Bob',
+    wallet: {},
+    pay(month, sum) {
+        this.wallet[month] = sum;
+    }
+};
+
+Object.setPrototypeOf(backendDeveloper, employees);
+backendDeveloper.pay('june', 1700);
+frontendDeveloper.pay('june', 2000);
+
+console.log(backendDeveloper.wallet.june);
+console.log(frontendDeveloper.wallet.june);
+frontendDeveloper.pay('june', 2500);
+console.log(backendDeveloper.wallet.june);
+console.log(frontendDeveloper.wallet.june);
+
+//3. Використовуючи user_1, створити нового користувача  user_2
+
+function User(name,age) {
+    this.name = name;
+    this.age = age
+}
+
+let user_1 = new User('Mike', 18);
+let user_2 = new user_1.constructor ('Bob', 25);
+console.log(user_1);
+console.log(user_2);
+
+
+/*4. Зробити щоб функція встановлювала об'єктам в якості прототипу позичений метод
+Array.prototype.join  */
+
+function UserType(name) {
+    for (let i = 0; i < name.length; i++) {
+        this[i] = name[i];
+        if (i+1 == name.length) {
+            Object.defineProperty(this,'length', {
+                enumerable:true,
+                writable:false,
+                configurable: true,
+                value: i+1
+            });
+        }
+    }
+}
+
+let admits = new UserType (['Mike', 'Bob', 'Nikola']);
+admits.join = Array.prototype.join;
+console.log(admits.join('; ')); //Mike; Bob; Nikola
+
 
 
 
