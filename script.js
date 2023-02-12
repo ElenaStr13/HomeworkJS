@@ -1,97 +1,51 @@
-/*1.Є два об'єкти. Зробити так щоб об'єкт sportCar  успадкував властивості від об'єкту
-car. Об'єкт passengerCar з власною власністю успадкував властивості від об'єкту car,
-Об'єкт toyCar  з власною властивістю успадкував властивості від об'єкту sportCar, а через
-нього і від car*/
+//1. Замінити текст в елементі <h2> на DOM method description
 
-let car = {
-    type: "electric",
-    while: 4,
-};
+const span = document.querySelector('.dom span');
+span.previousElementSibling.innerHTML = 'DOM method description';
 
-let sportCar =  {
-    doors: 2
-};
-Object.setPrototypeOf(sportCar,car);
-//console.log(sportCar);
+/*2. Посилання на сайті site.ua  розділені мовними префіксами /ua/ та 
+ /en/. Знайти всі посилання з українськими сторінками */
 
-let passengerCar =  {
-    doors:4,
-};
-Object.setPrototypeOf(passengerCar,car);
-//console.log(passengerCar);
+let aUa = document.getElementsByTagName('a');
 
-let toyCar = {
-    type: toy,
-}
-Object.setPrototypeOf(toyCar,sportCar);
-
-//2.Виправити код, щоб заробітна плата рахувалась для кожного працівника окремо
-
-let employees = {
-    wallet: {},
-    pay(month, sum) {
-        this.wallet[month] = sum;
-    }
-}
-
-let frontendDeveloper = {
-    name: 'Mike',
-  
-}
-Object.setPrototypeOf(frontendDeveloper, employees);
-
-let backendDeveloper = {
-    name: 'Bob',
-    wallet: {},
-    pay(month, sum) {
-        this.wallet[month] = sum;
+for (link of aUa) {
+    let href = link.getAttribute('href');
+    if (href.startsWith('site.ua/ua')) {
+        console.log(href);
+    } else {
+        continue
     }
 };
 
-Object.setPrototypeOf(backendDeveloper, employees);
-backendDeveloper.pay('june', 1700);
-frontendDeveloper.pay('june', 2000);
+// 3.Є список. Вставити теги  li 0,2,4 у список в js за порядком
 
-console.log(backendDeveloper.wallet.june);
-console.log(frontendDeveloper.wallet.june);
-frontendDeveloper.pay('june', 2500);
-console.log(backendDeveloper.wallet.june);
-console.log(frontendDeveloper.wallet.june);
+let firstLi = document.getElementById("first");
+let thirdLi = document.getElementById("third");
 
-//3. Використовуючи user_1, створити нового користувача  user_2
+let nullLi = document.createElement("li");
+nullLi.setAttribute('id', 'null');
+nullLi.innerHTML = '0';
+firstLi.prepend(nullLi);
 
-function User(name,age) {
-    this.name = name;
-    this.age = age
-}
+let twoLi = document.createElement("li");
+twoLi.setAttribute('id', 'two');
+twoLi.innerHTML = '2';
+thirdLi.prepend(twoLi);
 
-let user_1 = new User('Mike', 18);
-let user_2 = new user_1.constructor ('Bob', 25);
-console.log(user_1);
-console.log(user_2);
+let fourLi = document.createElement("li");
+fourLi.setAttribute('id', 'four');
+fourLi.innerHTML = '4';
+thirdLi.appendChild(fourLi);
 
+/*4. Є заголовок <h1>Document Object Model<span>DOM</span></h1>. 
+Створити посилання та вставити всередину посилання.*/
 
-/*4. Зробити щоб функція встановлювала об'єктам в якості прототипу позичений метод
-Array.prototype.join  */
-
-function UserType(name) {
-    for (let i = 0; i < name.length; i++) {
-        this[i] = name[i];
-        if (i+1 == name.length) {
-            Object.defineProperty(this,'length', {
-                enumerable:true,
-                writable:false,
-                configurable: true,
-                value: i+1
-            });
-        }
-    }
-}
-
-let admits = new UserType (['Mike', 'Bob', 'Nikola']);
-admits.join = Array.prototype.join;
-console.log(admits.join('; ')); //Mike; Bob; Nikola
-
+let aDom = document.createElement("a");
+aDom.setAttribute('id', 'link');
+aDom.setAttribute('href', 'https://dom.spec.whatwg.org/');
+let h1 = document.body.lastChild.previousElementSibling;
+aDom.appendChild(h1);
+document.body.appendChild(aDom);
 
 
 
