@@ -1,97 +1,128 @@
-/*1.Є два об'єкти. Зробити так щоб об'єкт sportCar  успадкував властивості від об'єкту
-car. Об'єкт passengerCar з власною власністю успадкував властивості від об'єкту car,
-Об'єкт toyCar  з власною властивістю успадкував властивості від об'єкту sportCar, а через
-нього і від car*/
+//1.Знайти помилку, та виправити код, щоб сума рахувалась правильно
 
-let car = {
-    type: "electric",
-    while: 4,
-};
-
-let sportCar =  {
-    doors: 2
-};
-Object.setPrototypeOf(sportCar,car);
-//console.log(sportCar);
-
-let passengerCar =  {
-    doors:4,
-};
-Object.setPrototypeOf(passengerCar,car);
-//console.log(passengerCar);
-
-let toyCar = {
-    type: toy,
-}
-Object.setPrototypeOf(toyCar,sportCar);
-
-//2.Виправити код, щоб заробітна плата рахувалась для кожного працівника окремо
-
-let employees = {
-    wallet: {},
-    pay(month, sum) {
-        this.wallet[month] = sum;
+function count(expression) {
+    function getValues(expression) {
+        let values = [...expression]//помилка назву іншої змінної треба заміть  values
+        return values;
     }
-}
-
-let frontendDeveloper = {
-    name: 'Mike',
-  
-}
-Object.setPrototypeOf(frontendDeveloper, employees);
-
-let backendDeveloper = {
-    name: 'Bob',
-    wallet: {},
-    pay(month, sum) {
-        this.wallet[month] = sum;
+    let values = getValues(expression);
+    switch (values[1]) {
+        case '+':
+            return showResult(sum(values));
+        case '-':
+            return showResult(subtract(values));
+        case '*':
+            return showResult(multiply(values));
+        case '/':
+            return showResult(divide(values))
     }
-};
+    function showResult(value) {
+        return value
+    }
 
-Object.setPrototypeOf(backendDeveloper, employees);
-backendDeveloper.pay('june', 1700);
-frontendDeveloper.pay('june', 2000);
-
-console.log(backendDeveloper.wallet.june);
-console.log(frontendDeveloper.wallet.june);
-frontendDeveloper.pay('june', 2500);
-console.log(backendDeveloper.wallet.june);
-console.log(frontendDeveloper.wallet.june);
-
-//3. Використовуючи user_1, створити нового користувача  user_2
-
-function User(name,age) {
-    this.name = name;
-    this.age = age
 }
 
-let user_1 = new User('Mike', 18);
-let user_2 = new user_1.constructor ('Bob', 25);
-console.log(user_1);
-console.log(user_2);
-
-
-/*4. Зробити щоб функція встановлювала об'єктам в якості прототипу позичений метод
-Array.prototype.join  */
-
-function UserType(name) {
-    for (let i = 0; i < name.length; i++) {
-        this[i] = name[i];
-        if (i+1 == name.length) {
-            Object.defineProperty(this,'length', {
-                enumerable:true,
-                writable:false,
-                configurable: true,
-                value: i+1
-            });
+//замінила values[1] на values[0] тому що в масиві нульовий елемент є числом, а перший елемент є знак
+function sum(values) {
+    return +values[0] + +values[2]; //якщо операнд не є числом, унарний плюс перетворить його на число
+}
+function subtract(values) {
+    return +values[0] - +values[2];
+}
+function multiply(values) {
+    return +values[0] * +values[2];
+}
+//2. Зробити конструктор функцию Error при діленні на 0
+function divide(values) {
+    try {
+        if (+values[2] == 0) {
+            throw new Error('Can`t divide by 0');
         }
+        return +values[0] / +values[2];
+    } catch (error) {
+        console.log(`${error.name}: ${error.message}`);
+        return 0;
     }
 }
 
-let admits = new UserType (['Mike', 'Bob', 'Nikola']);
-admits.join = Array.prototype.join;
-console.log(admits.join('; ')); //Mike; Bob; Nikola
+//3. Переписати код, щоб він вірно обробляв помилки
 
+function count(expression) {
+    function getValues(expression) {
+        let values = [...expression]
+        return values;
+    }
 
+    let values;
+    try {
+        let data = Values(expression); //Error * in function name
+        data = values;
+    } catch (error) {
+        console.log(error.name + ':' + error.message) //**Throw wrong error
+        values = [0, '+', 0];
+    }
+    switch (values[1]) {
+        case '+':
+            return showResult(sum(values));
+        case '-':
+            return showResult(subtract(values));
+        case '*':
+            return showResult(multiply(values));
+        case '/':
+            return showResult(divide(values))
+    }
+    function showResult(value) {
+        return value
+    }
+}
+
+function sum(values) {
+    return +values[0] + +values[2];
+}
+function subtract(values) {
+    return +values[0] - +values[2];
+}
+function multiply(values) {
+    return +values[0] * +values[2];
+}
+function divide(values) {
+    return +values[0] / +values[2];
+}
+
+/*4.  За допмогою try catch  зробити обробку помилки так, щоб користувач
+міг повторно ввести дані та програма знову обробила вік */
+
+function MakeUsers(name, age) {
+    this.name = name;
+    this.age = age;
+}
+let user = new MakeUsers('Mike');//Forgot to pass the second parameter
+function showMovie(user) {
+    try {
+        if (user.age == undefined) {
+            throw new SyntaxError('Age not determined');
+
+        }
+        if (user.age >= 18) {//undefined
+            return 'You can watch this movie';
+        } else {
+            return 'Sorry, you are too young';
+        }
+    } catch (error) {
+
+        return error.name + ': ' + error.message;
+    }
+};
+
+function message(message) {
+    if (typeof (user.age) == Number) {
+        console.log(message);
+    } else {
+        prompt("Enter your age");
+        showMovie(user);
+        console.log(message);
+    }
+}
+message(showMovie(user));
 
 
