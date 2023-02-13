@@ -94,14 +94,13 @@ function divide(values) {
 
 function MakeUsers(name, age) {
     this.name = name;
-    this.age = age;
+    this.age = age  //|| prompt("Enter your age");
 }
 let user = new MakeUsers('Mike');//Forgot to pass the second parameter
 function showMovie(user) {
     try {
         if (user.age == undefined) {
             throw new SyntaxError('Age not determined');
-
         }
         if (user.age >= 18) {
             return 'You can watch this movie';
@@ -109,18 +108,18 @@ function showMovie(user) {
             return 'Sorry, you are too young';
         }
     } catch (error) {
-       return error.name + ': ' + error.message;
+        return error.name + ': ' + error.message;
     }
 };
 
 function message(message) {
     if (typeof (user.age) == Number) {
         console.log(message);
-   } else {
-      user.age = prompt("Enter your age");
-       showMovie(user);
+    } else {
+        user.age = prompt("Enter your age");
+        showMovie(user);
         console.log(message);
-   }
+    }
 }
 message(showMovie(user));
 
