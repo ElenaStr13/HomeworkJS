@@ -108,19 +108,17 @@ function showMovie(user) {
             return 'Sorry, you are too young';
         }
     } catch (error) {
-        return error.name + ': ' + error.message;
+        if (error.message == 'Age not determined') {
+            console.log(error.name + ': ' + error.message);
+            user.age = prompt("Enter your age");
+            return showMovie(user);
+        }
     }
-};
+    };
 
-function message(message) {
-    if (typeof (user.age) == Number) {
-        console.log(message);
-    } else {
-        user.age = prompt("Enter your age");
-        showMovie(user);
+    function message(message) {
         console.log(message);
     }
-}
-message(showMovie(user));
+    message(showMovie(user));
 
 
