@@ -1,51 +1,188 @@
-//1. Замінити текст в елементі <h2> на DOM method description
+/*1. Написати фугкцію getData, яка буде приймати дані, за посиланням
+фільтрувати їх та виведе у консоль масив об'єктів, де кожна властивість
+title  починається з літери а.*/
 
-const span = document.querySelector('.dom span');
-span.previousElementSibling.innerHTML = 'DOM method description';
+//let url = 'https://jsonplaceholder.typicode.com/posts';
 
-/*2. Посилання на сайті site.ua  розділені мовними префіксами /ua/ та 
- /en/. Знайти всі посилання з українськими сторінками */
+// fetch(url).then((response) => {
+//     //console.log(response)
+//     if (response.ok) {
+//         return response.json();
+//     }
+//     throw new Error('Something went wrong');
+// })
+//     .then((responseJson) => {
+//         responseJson.map((el) => {
+//             if (!el.title.indexOf('a')) {
+//                 console.log(el);
+//             }
+//         })
+//         return responseJson
+//     })
+//     .catch((error) => {
+//         console.log(error)
+//     });
 
-let aUa = document.getElementsByTagName('a');
+//2. Переписати задачу з першого завдання, використовуючи async/await
 
-for (link of aUa) {
-    let href = link.getAttribute('href');
-    if (href.startsWith('site.ua/ua')) {
-        console.log(href);
-    } else {
-        continue
+// let url = 'https://jsonplaceholder.typicode.com/posts';
+
+// async function getAsyncData(url) {
+//     try {
+//         let result = await fetch(url);
+//         if (result.ok) {
+//             let response = await result.json();
+//             response.map((el) => {
+//                 if (!el.title.indexOf('a')) {
+//                     console.log(el);
+//                 }
+//                 return el;
+//             })
+//         } else {
+//             throw new Error(`Error: ${result.status}`);
+//         }
+//     } catch (error) {
+//         console.log(error.message)
+//     }
+// };
+
+// getAsyncData('https://jsonplaceholder.typicode.com/posts');
+
+/*3, 4 Є розмітка html. Написати функцію, яка буде отримувати дані за посиланням і
+записувати у user-a всі об'єкти, де кожна властивість title починається з літери
+"а". Кожен об'єкт повинен бути записан з нового рядка. Потім із цих об'єктів
+треба обрати обрати об'єкти, які починаються з літери "ab" та записати їх
+у блоці user-ab, додати кнопки, де виводяться об'єкти title починається з літери
+"а" "ab" і all*/
+//в мене не знашлося title ab  тому виводжу ad
+
+let url = 'https://jsonplaceholder.typicode.com/posts';
+let userA = document.querySelector('.user-a');
+let userAd = document.querySelector('.user-ad');
+let tittleA = document.querySelector('.add-a');
+let tittleAd = document.querySelector('.add-ad');
+let tittleAall = document.querySelector('.add-all');
+
+let arr = [],
+    arrAd = [];
+
+fetch(url).then((response) => {
+    if (response.ok) {
+        return response.json();
+    }
+    throw new Error('Something went wrong');
+})
+
+tittleA.addEventListener('click', getAsyncData);
+
+async function getAsyncData() {
+    try {
+        let result = await fetch(url);
+        if (result.ok) {
+            let response = await result.json();
+            while (userA.firstChild) {
+                userA.removeChild(userA.firstChild);
+            };
+            response.map((el) => {
+                if (!el.title.indexOf('a')) {
+                    let divA = document.createElement('div');
+                    if (divA.innerHTML !== '') {
+                        divA.innerHTML = '';
+                        divA.innerHTML = JSON.stringify(el, null);
+                    } else {
+                        userA.appendChild(divA);
+                        divA.innerHTML = JSON.stringify(el, null);
+                    }
+                    userAd.innerHTML = '';
+                    return divA;
+                }
+            });
+        } else {
+            throw new Error(`Error: ${result.status}`);
+        }
+    } catch (error) {
+        console.log(error.message)
     }
 };
 
-// 3.Є список. Вставити теги  li 0,2,4 у список в js за порядком
+tittleAd.addEventListener('click', getAsyncDataAD);
 
-let firstLi = document.getElementById("first");
-let thirdLi = document.getElementById("third");
+async function getAsyncDataAD() {
+    try {
+        let result = await fetch(url);
+        if (result.ok) {
+            let response = await result.json();
+            while (userAd.firstChild) {
+                userAd.removeChild(userAd.firstChild);
+            };
+            response.map((el) => {
+                if (!el.title.indexOf('ad')) {
+                    let divAd = document.createElement('div');
+                    if (divAd.innerHTML !== '') {
+                        divAd.innerHTML = '';
+                        divAd.innerHTML = JSON.stringify(el, null);
+                    } else {
+                        userAd.appendChild(divAd);
+                        divAd.innerHTML = JSON.stringify(el, null);
+                    }
+                    userA.innerHTML = '';
+                    return divAd;
+                }
+            });
+        } else {
+            throw new Error(`Error: ${result.status}`);
+        }
+    } catch (error) {
+        console.log(error.message)
+    }
+};
 
-let nullLi = document.createElement("li");
-nullLi.setAttribute('id', 'null');
-nullLi.innerHTML = '0';
-firstLi.prepend(nullLi);
+async function getAsyncDataAll() {
+    try {
+        let result = await fetch(url);
+        if (result.ok) {
+            let response = await result.json();
+            while (userA.firstChild) {
+                userA.removeChild(userA.firstChild);
+            };
+            while (userAd.firstChild) {
+                userAd.removeChild(userAd.firstChild);
+            };
+            response.map((el) => {
+                if (!el.title.indexOf('a')) {
+                    let divA = document.createElement('div');
+                    if (divA.innerHTML !== '') {
+                        divA.innerHTML = '';
+                        divA.innerHTML = JSON.stringify(el, null);
+                    } else {
+                        userA.appendChild(divA);
+                        divA.innerHTML = JSON.stringify(el, null);
+                    }
+                    if (!el.title.indexOf('ad')) {
+                        let divAd = document.createElement('div');
+                        if (divAd.innerHTML !== '') {
+                            divAd.innerHTML = '';
+                            divAd.innerHTML = JSON.stringify(el, null);
+                        } else {
+                            userAd.appendChild(divAd);
+                            divAd.innerHTML = JSON.stringify(el, null);
+                        }
+                        return divAd;
+                    }
+                    return divA, divA;
+                }
+            });
+        } else {
+            throw new Error(`Error: ${result.status}`);
+        }
+    } catch (error) {
+        console.log(error.message)
+    }
+};
 
-let twoLi = document.createElement("li");
-twoLi.setAttribute('id', 'two');
-twoLi.innerHTML = '2';
-thirdLi.prepend(twoLi);
+tittleAall.addEventListener('click', getAsyncDataAll)
 
-let fourLi = document.createElement("li");
-fourLi.setAttribute('id', 'four');
-fourLi.innerHTML = '4';
-thirdLi.appendChild(fourLi);
 
-/*4. Є заголовок <h1>Document Object Model<span>DOM</span></h1>. 
-Створити посилання та вставити всередину посилання.*/
-
-let aDom = document.createElement("a");
-aDom.setAttribute('id', 'link');
-aDom.setAttribute('href', 'https://dom.spec.whatwg.org/');
-let h1 = document.body.lastChild.previousElementSibling;
-aDom.appendChild(h1);
-document.body.appendChild(aDom);
 
 
 
