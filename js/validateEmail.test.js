@@ -25,7 +25,7 @@ describe('valid data', function () {
     assert.isFalse(validateEmail('emai@gmai@l.com'), 'Don\' have the @ greater than 1');
   });
   it("Don\'t have the dot or dot befor @", function () {
-    assert.isTrue(validateEmail('e.mail@gmail.com'), 'Have dot and dot after @');
+    assert.isTrue(validateEmail('e.mail@gmail.com'), 'Have dot and dot after @');//true Тут не може бути, тому що є умова, щоб email був меньше 5 символів
     assert.isFalse(validateEmail('e.mail@gmailcom'), 'Don\'t have dot after @');
     assert.isFalse(validateEmail('e.mail.@gmail.com'), 'Dot befor @');
   });
